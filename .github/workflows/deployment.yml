@@ -4,16 +4,15 @@ on:
     branches:
       - main
       - dev
-      - dev/**
 env:
-  MONGODB_DB_NAME: gha-demo
+  MONGODB_DB_NAME: $MONGODB_DB_NAME
 jobs:
   test:
     env:
-      MONGODB_CLUSTER_ADDRESS: cluster0.dwenhli.mongodb.net
-      MONGODB_USERNAME: saukumar95
-      MONGODB_PASSWORD: deVV8r6rtFNQcKcg
-      PORT: 8080
+      MONGODB_CLUSTER_ADDRESS: $MONGODB_CLUSTER_ADDRESS
+      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      PORT: $PORT
     runs-on: ubuntu-latest
     steps:
             - name: Get code
