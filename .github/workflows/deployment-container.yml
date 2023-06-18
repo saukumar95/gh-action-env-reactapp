@@ -1,10 +1,17 @@
 name: App deployment using env variables
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
+      - dev
 env:
+  CACHE_KEY: deps-node-modules
   MONGODB_DB_NAME: gha-demo
 jobs:
   test:
+    environment: testing
     env:
+      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
       MONGODB_CLUSTER_ADDRESS: cluster0.cmrtxqp.mongodb.net
       MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
@@ -17,7 +24,7 @@ jobs:
               uses: actions/cache@v3
               with:
                   path: ~/.npm
-                  key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
+                  key: ${{env.CACHE_KEY}}-${{ hashFiles('**/package-lock.json')}}
             - name: Install dependencies
               run: npm ci
             - name: Run server
