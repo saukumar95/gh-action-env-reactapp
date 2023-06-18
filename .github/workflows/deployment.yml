@@ -1,9 +1,5 @@
 name: App deployment using env variables
-on:
-  push:
-    branches:
-      - main
-      - dev
+on: workflow_dispatch
 env:
   MONGODB_DB_NAME: gha-demo
 jobs:
